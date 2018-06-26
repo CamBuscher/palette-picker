@@ -4,6 +4,8 @@ const app = express();
 app.set('port', process.env.PORT || 3000);
 app.locals.title = 'Palette Picker';
 
+app.use(express.static('public'));
+
 app.get('/', (request, response) => {
   response.send('P-p-p-p-PALETTE PICKER')
 });
