@@ -73,7 +73,7 @@ $(document).ready(() => {
 
     xhr.send(data);
  
-    $('.project-input').text('')
+    $('.project-input').val('')
   }
 
   generateColors()
