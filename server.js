@@ -11,10 +11,6 @@ app.locals.title = 'Palette Picker';
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-app.get('/', (request, response) => {
-  response.send('P-p-p-p-PALETTE PICKER')
-});
-
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`)
 });
@@ -39,16 +35,22 @@ app.get('/api/v1/palettes', (request, response) => {
     })
 });
 
-app.post('/api/v1/projects/', (request, response) => {
-  const { project } = request.body;
-  const palettes = [];
+app.post('/api/v1/projects', (request, response) => {
+  const project = request.body;
 
-  if (!project) {
-    response.status(422).send({
-      error: 'Please attach a project name under the project key in a post request header'
-    })
-  } else {
-    app.locals.projects.push({ id, project, palettes });
-    response.status(201).json({ id, project, palettes });
+  for (let requiredParameter of ['name']) {
+    if (!project[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `Expected format: { name: <String> }. You're missing a "${requiredParameter}" property.`});
+    }
   }
+
+  database('projects').insert(project, 'id')
+    .then(project => {
+      response.status(201).json({ id: project[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
 });
