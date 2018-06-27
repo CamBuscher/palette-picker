@@ -23,6 +23,8 @@ $(document).ready(() => {
     }
   }
 
+  $('.generate').on('click', generateColors)
+
   function appendBox(box, color) {
     const style = 'background-color:' + color
     $('.colors-container').append(`
