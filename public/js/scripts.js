@@ -2,8 +2,8 @@ $(document).ready(() => {
   
   const boxes = {
     box1 : {
-      'locked': true,
-      'color': '#000000'
+      'locked': false,
+      'color': null
     },
     box2 : {
       'locked': false,
@@ -32,7 +32,7 @@ $(document).ready(() => {
     `)
   }
 
-  const hexGenerator = () => '#' + ('000000' + (Math.random() * 0xFFFFFF << 0).toString(16)).slice(-6)
+  const hexGenerator = () => '#' + ('000000' + (Math.random() * 0xFFFFFF << 0).toString(16)).slice(-6).toUpperCase()
 
   function generateColors() {
     $('.colors-container').html(`<div></div>`)
