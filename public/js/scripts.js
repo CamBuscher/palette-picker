@@ -53,27 +53,25 @@ $(document).ready(() => {
     e.preventDefault();
     const project = $('.project-input').val()
 
-    // var settings = {
-    //   "async": true,
-    //   "crossDomain": true,
-    //   "url": "http://localhost:3000/api/v1/projects/new",
-    //   "method": "POST",
-    //   "headers": {
-    //     "Content-Type": "application/json",
-    //     "Cache-Control": "no-cache",
-    //   },
-    //   "processData": false,
-    //   "data": "{\n\t\"Content-Type\": \"application/json\",\n\t\"project\": \"palette-picker\"\n}"
-    // }
+    var data = JSON.stringify({
+      "Content-Type": "application/json",
+      project
+    });
 
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:3000/api/v1/projects/new",
-      data: {
-        project,
-        "Content-Type": "application/json"
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
       }
     });
+
+    xhr.open("POST", "http://localhost:3000/api/v1/projects/new");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Cache-Control", "no-cache");
+
+    xhr.send(data);
  
     $('.project-input').text('')
   }
