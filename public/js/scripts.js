@@ -67,7 +67,7 @@ $(document).ready(() => {
       }
     });
 
-    xhr.open("POST", "http://localhost:3000/api/v1/projects/new");
+    xhr.open("POST", "http://localhost:3000/api/v1/projects");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Cache-Control", "no-cache");
 

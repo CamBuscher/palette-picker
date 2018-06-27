@@ -29,7 +29,7 @@ app.get('/api/v1/projects', (request, response) => {
   response.json(projects)
 });
 
-app.post('/api/v1/projects/new', (request, response) => {
+app.post('/api/v1/projects/', (request, response) => {
   const id = Date.now().toString();
 
   const { project } = request.body;
