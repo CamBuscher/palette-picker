@@ -30,13 +30,14 @@ app.post('/api/v1/projects/new', (request, response) => {
   const id = Date.now().toString();
 
   const { project } = request.body;
+  const palettes = [];
 
   if (!project) {
     response.status(422).send({
       error: 'Please attach a project name under the project key in a post request header'
     })
   } else {
-    app.locals.projects.push({ id, project });
-    response.status(201).json({ id, project });
+    app.locals.projects.push({ id, project, palettes });
+    response.status(201).json({ id, project, palettes });
   }
 });
