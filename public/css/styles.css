@@ -25,3 +25,26 @@ h1 {
 .generate {
   margin-bottom: 10px;
 }
+
+.existing-projects {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.project {
+  min-width: 250px;
+  width: fit-content;
+  margin-bottom: 20px;
+}
+
+.palette {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.palette-color {
+  width: 10px;
+  height: 10px;
+  display: inline-block
+}
