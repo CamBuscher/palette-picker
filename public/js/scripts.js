@@ -33,7 +33,7 @@ $(document).ready(() => {
     $('.colors-container').append(`
       <div class='color-box' id=${box} style=${style}>
         <p>${color}</p>
-
+        <div class='lock'>LOCK</div>
       </div>
     `)
   }
