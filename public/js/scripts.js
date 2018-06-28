@@ -183,9 +183,9 @@ $(document).ready(() => {
       method: 'GET',
     })
       .then(response => response.json())
-      .then(palettes => palettes.forEach(palette => {
+      .then(palettes => palettes.forEach((palette, index) => {
         const colors = [palette.color1, palette.color2, palette.color3, palette.color4, palette.color5]
-        appendPalette(palette.project_id, palette.name, colors, Date.now(), palette.id)
+        appendPalette(palette.project_id, palette.name, colors, index, palette.id)
       }))
   }
 
