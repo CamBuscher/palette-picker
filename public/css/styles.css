@@ -33,6 +33,7 @@ h1 {
   background-color: white;
   font-size: 12px;
   padding: 2px;
+  cursor: pointer;
 }
 
 .unlock {
@@ -42,6 +43,7 @@ h1 {
   background-color: white;
   font-size: 12px;
   padding: 2px;
+  cursor: pointer;
 }
 
 .existing-projects {
