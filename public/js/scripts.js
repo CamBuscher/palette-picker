@@ -31,8 +31,9 @@ $(document).ready(() => {
   function appendBox(box, color) {
     const style = 'background-color:' + color
     $('.colors-container').append(`
-      <div class='color-box' class=${box} style=${style}>
+      <div class='color-box' id=${box} style=${style}>
         <p>${color}</p>
+
       </div>
     `)
   }
