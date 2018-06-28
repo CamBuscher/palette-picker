@@ -27,15 +27,17 @@ $(document).ready(() => {
   $('.project-form').on('submit', createNewProject)
   $('.palette-form').on('submit', createNewPalette)
   $('.existing-projects').on('click', '.delete', deletePalette)
-  $('.colors-container').on('click', '.lock',lockBox)
-  $('.colors-container').on('click', '.unlock', unlockBox)
+  $('.colors-container').on('click', '.LOCK',lockBox)
+  $('.colors-container').on('click', '.UNLOCK', unlockBox)
 
-  function appendBox(box, color) {
+  function appendBox(box, color, locked) {
+    const lockStatus = locked ? "UNLOCK" : "LOCK"
+
     const style = 'background-color:' + color
     $('.colors-container').append(`
       <div class='color-box' id=${box} style=${style}>
         <p>${color}</p>
-        <div class='lock'>LOCK</div>
+        <div class='${lockStatus}'>${lockStatus}</div>
       </div>
     `)
   }
@@ -46,11 +48,11 @@ $(document).ready(() => {
     $('.colors-container').html(`<div></div>`)
     Object.keys(boxes).forEach(box => {
       if (boxes[box].locked) {
-        appendBox(box, boxes[box].color)
+        appendBox(box, boxes[box].color, true)
       } else {
         const color = hexGenerator()
         boxes[box].color = color
-        appendBox(box, color)
+        appendBox(box, color, false)
       }
     })
   }
@@ -59,7 +61,7 @@ $(document).ready(() => {
     const box = $(this).closest('.color-box').attr('id')
     boxes[box].locked = true;
     $(`#${box}`).append(`
-      <div class='unlock'>UNLOCK</div>
+      <div class='UNLOCK'>UNLOCK</div>
     `)
     $(this).remove()
   }
@@ -68,7 +70,7 @@ $(document).ready(() => {
     const box = $(this).closest('.color-box').attr('id')
     boxes[box].locked = false;
     $(`#${box}`).append(`
-      <div class='lock'>LOCK</div>
+      <div class='LOCK'>LOCK</div>
     `)
     $(this).remove()
   }
