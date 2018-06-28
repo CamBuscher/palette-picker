@@ -85,5 +85,17 @@ $(document).ready(() => {
     $('.project-input').val('')
   }
 
+  function fetchExistingProjects() {
+    fetch('http://localhost:3000/api/v1/projects', {
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(projects => projects.forEach(project => appendProject(project.id, project.name)))
+  }
+
   generateColors()
+  fetchExistingProjects()
 })
