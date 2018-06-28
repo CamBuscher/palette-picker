@@ -101,35 +101,71 @@ $(document).ready(() => {
 
   //PALETTES
 
+  function postPalette(palette) {
+    return fetch('http://localhost:3000/api/v1/palettes', {
+      body: JSON.stringify(palette),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+    })
+      .then(response => response.json())
+  }
+
   function createNewPalette(e) {
     e.preventDefault()
     
-    const projectName = $('.save-palette').parent().find('.select').find(":selected").text()
     const projectID = $('.save-palette').parent().find('.select').find(":selected").attr('id')
     const paletteName = $('.palette-input').val()
     const colors = Object.keys(boxes).map(box => boxes[box].color)
 
-    appendPalette(projectID, paletteName, colors, Date.now())
+    postPalette({
+      name: paletteName,
+      color1: colors[0],
+      color2: colors[1],
+      color3: colors[2],
+      color4: colors[3],
+      color5: colors[4],
+      project_id: projectID
+    }).then(response => {
+      const paletteID = response.id.toString()
+      appendPalette(projectID, paletteName, colors, Date.now(), paletteID)
+    })
   }
 
-  function appendPalette(id, paletteName, colors, UID) {
-    $(`#project${id}`).append(`
-      <div class='palette${UID}'>
-        <span>${paletteName}</span>
+  function appendPalette(projectid, paletteName, colors, UID, paletteID) {
+    $(`#project${projectid}`).append(`
+      <div class='palette palette${UID}'>
+        <span id=${paletteID}>${paletteName}</span>
       </div>
     `)
 
     colors.forEach(color => {
-      $(`#project${id}`).children(`.palette${UID}`).append(`
+      $(`#project${projectid}`).children(`.palette${UID}`).append(`
         <div class='palette-color' style="background-color:${color}"></div>
       `)
     })
 
-    $(`#project${id}`).children(`.palette${UID}`).append(`
+    $(`#project${projectid}`).children(`.palette${UID}`).append(`
       <button class='delete'>Delete</button>
     `)
   }
 
+  function fetchExistingPalettes() {
+    fetch('http://localhost:3000/api/v1/palettes', {
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(palettes => palettes.forEach(palette => {
+        const colors = [palette.color1, palette.color2, palette.color3, palette.color4, palette.color5]
+        appendPalette(palette.project_id, palette.name, colors, Date.now(), palette.id)
+      }))
+  }
+
   generateColors()
   fetchExistingProjects()
+  fetchExistingPalettes()
 })
