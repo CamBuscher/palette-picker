@@ -28,6 +28,7 @@ $(document).ready(() => {
   $('.palette-form').on('submit', createNewPalette)
   $('.existing-projects').on('click', '.delete', deletePalette)
   $('.colors-container').on('click', '.lock',lockBox)
+  $('.colors-container').on('click', '.unlock', unlockBox)
 
   function appendBox(box, color) {
     const style = 'background-color:' + color
@@ -59,6 +60,15 @@ $(document).ready(() => {
     boxes[box].locked = true;
     $(`#${box}`).append(`
       <div class='unlock'>UNLOCK</div>
+    `)
+    $(this).remove()
+  }
+
+  function unlockBox() {
+    const box = $(this).closest('.color-box').attr('id')
+    boxes[box].locked = false;
+    $(`#${box}`).append(`
+      <div class='lock'>LOCK</div>
     `)
     $(this).remove()
   }
