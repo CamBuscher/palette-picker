@@ -37,6 +37,10 @@ h1 {
   margin-bottom: 20px;
 }
 
+.palette {
+  display: block;
+}
+
 .palette-color {
   width: 10px;
   height: 10px;
