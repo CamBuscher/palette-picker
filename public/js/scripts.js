@@ -49,30 +49,39 @@ $(document).ready(() => {
     })
   }
 
+  function postProject(project) {
+    return fetch('http://localhost:3000/api/v1/projects', {
+      body: JSON.stringify(project), 
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+      })
+      .then(response => response.json())
+  }
+
+  function appendProject(id, name) {
+    $('.existing-projects').append(`
+      <div class='project' id=${id}>
+        <h3>${name}</h3>
+      </div>`)
+
+    $('.select').append(`
+      <option id='${id}'>${name}</option>
+    `)
+  }
+
   function createNewProject(e) {
     e.preventDefault();
-    const project = $('.project-input').val()
+    const name = $('.project-input').val()
 
-    var data = JSON.stringify({
-      "Content-Type": "application/json",
-      project
-    });
-
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        console.log(this.responseText);
-      }
-    });
-
-    xhr.open("POST", "http://localhost:3000/api/v1/projects");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Cache-Control", "no-cache");
-
-    xhr.send(data);
- 
+    postProject({name})
+      .then(response => {
+        const id = response.id.toString()
+        console.log(response.id.toString())
+        appendProject(id, name)
+      })
+    
     $('.project-input').val('')
   }
 
