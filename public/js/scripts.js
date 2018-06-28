@@ -29,6 +29,7 @@ $(document).ready(() => {
   $('.existing-projects').on('click', '.delete', deletePalette)
   $('.colors-container').on('click', '.LOCK',lockBox)
   $('.colors-container').on('click', '.UNLOCK', unlockBox)
+  $('.existing-projects').on('click', '.palette', makeCurrentPalette)
 
   function appendBox(box, color, locked) {
     const lockStatus = locked ? "UNLOCK" : "LOCK"
@@ -166,7 +167,7 @@ $(document).ready(() => {
 
     colors.forEach(color => {
       $(`#project${projectid}`).children(`.palette${UID}`).append(`
-        <div class='palette-color' style="background-color:${color}"></div>
+        <div class='palette-color' id=${color} style="background-color:${color}"></div>
       `)
     })
 
@@ -199,6 +200,19 @@ $(document).ready(() => {
         'content-type': 'application/json'
       },
       method: 'DELETE',
+    })
+  }
+
+  function makeCurrentPalette(e) {
+    $('.colors-container').html(`<div></div>`)
+    let hexArray = []
+    $(this).children('div').each(function() {
+      hexArray.push($(this).attr('id'))
+    })
+    hexArray.forEach((hex, index) => {
+      boxes[`box${(index + 1)}`].locked = false;
+      boxes[`box${(index + 1)}`].color = hex;
+      appendBox(`box${index + 1}`, hex, false)
     })
   }
 
