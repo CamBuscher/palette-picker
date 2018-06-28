@@ -27,12 +27,18 @@ $(document).ready(() => {
   $('.project-form').on('submit', createNewProject)
   $('.palette-form').on('submit', createNewPalette)
   $('.existing-projects').on('click', '.delete', deletePalette)
+  $('.colors-container').on('click', '.LOCK',lockBox)
+  $('.colors-container').on('click', '.UNLOCK', unlockBox)
+  $('.existing-projects').on('click', '.palette', makeCurrentPalette)
 
-  function appendBox(box, color) {
+  function appendBox(box, color, locked) {
+    const lockStatus = locked ? "UNLOCK" : "LOCK"
+
     const style = 'background-color:' + color
     $('.colors-container').append(`
-      <div class='color-box' class=${box} style=${style}>
+      <div class='color-box' id=${box} style=${style}>
         <p>${color}</p>
+        <div class='${lockStatus}'>${lockStatus}</div>
       </div>
     `)
   }
@@ -43,13 +49,31 @@ $(document).ready(() => {
     $('.colors-container').html(`<div></div>`)
     Object.keys(boxes).forEach(box => {
       if (boxes[box].locked) {
-        appendBox(box, boxes[box].color)
+        appendBox(box, boxes[box].color, true)
       } else {
         const color = hexGenerator()
         boxes[box].color = color
-        appendBox(box, color)
+        appendBox(box, color, false)
       }
     })
+  }
+
+  function lockBox() {
+    const box = $(this).closest('.color-box').attr('id')
+    boxes[box].locked = true;
+    $(`#${box}`).append(`
+      <div class='UNLOCK'>UNLOCK</div>
+    `)
+    $(this).remove()
+  }
+
+  function unlockBox() {
+    const box = $(this).closest('.color-box').attr('id')
+    boxes[box].locked = false;
+    $(`#${box}`).append(`
+      <div class='LOCK'>LOCK</div>
+    `)
+    $(this).remove()
   }
 
   // PROJECTS
@@ -143,7 +167,7 @@ $(document).ready(() => {
 
     colors.forEach(color => {
       $(`#project${projectid}`).children(`.palette${UID}`).append(`
-        <div class='palette-color' style="background-color:${color}"></div>
+        <div class='palette-color' id=${color} style="background-color:${color}"></div>
       `)
     })
 
@@ -160,9 +184,9 @@ $(document).ready(() => {
       method: 'GET',
     })
       .then(response => response.json())
-      .then(palettes => palettes.forEach(palette => {
+      .then(palettes => palettes.forEach((palette, index) => {
         const colors = [palette.color1, palette.color2, palette.color3, palette.color4, palette.color5]
-        appendPalette(palette.project_id, palette.name, colors, Date.now(), palette.id)
+        appendPalette(palette.project_id, palette.name, colors, index, palette.id)
       }))
   }
 
@@ -176,6 +200,19 @@ $(document).ready(() => {
         'content-type': 'application/json'
       },
       method: 'DELETE',
+    })
+  }
+
+  function makeCurrentPalette(e) {
+    $('.colors-container').html(`<div></div>`)
+    let hexArray = []
+    $(this).children('div').each(function() {
+      hexArray.push($(this).attr('id'))
+    })
+    hexArray.forEach((hex, index) => {
+      boxes[`box${(index + 1)}`].locked = false;
+      boxes[`box${(index + 1)}`].color = hex;
+      appendBox(`box${index + 1}`, hex, false)
     })
   }
 
