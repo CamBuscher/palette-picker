@@ -26,6 +26,7 @@ $(document).ready(() => {
   $('.generate').on('click', generateColors)
   $('.project-form').on('submit', createNewProject)
   $('.palette-form').on('submit', createNewPalette)
+  $('.existing-projects').on('click', '.delete', deletePalette)
 
   function appendBox(box, color) {
     const style = 'background-color:' + color
@@ -163,6 +164,19 @@ $(document).ready(() => {
         const colors = [palette.color1, palette.color2, palette.color3, palette.color4, palette.color5]
         appendPalette(palette.project_id, palette.name, colors, Date.now(), palette.id)
       }))
+  }
+
+  function deletePalette(e) {
+    const id = $(this).closest('div').find('span').attr('id')
+    
+    $(this).closest('div').remove()
+
+    fetch(`http://localhost:3000/api/v1/palettes/${id}`, {
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'DELETE',
+    })
   }
 
   generateColors()

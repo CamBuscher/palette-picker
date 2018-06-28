@@ -27,13 +27,14 @@ h1 {
 }
 
 .existing-projects {
-   display: flex;
+  display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
 .project {
-  width: 250px;
+  min-width: 250px;
+  width: fit-content;
   margin-bottom: 20px;
 }
 
