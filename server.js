@@ -81,29 +81,13 @@ app.post('/api/v1/palettes', (request, response) => {
     })
 })
 
-app.delete('/api/v1/projects/:id', (request, response) => {
-  const id = request.params.id
-
-  database('projects').where('id', id).del()
-    .then(rowsDeleted => {
-      if (rowsDeleted === 0) {
-        response.status(404).json({ "error": "No matching ID found, please enter a valid id." })
-      } else {
-        response.sendStatus(204)
-      }
-    })
-    .catch(error => {
-      response.status(500).json({ error })
-    })
-})
-
 app.delete('/api/v1/palettes/:id', (request, response) => {
   const id = request.params.id
 
   database('palettes').where('id', id).del()
     .then(rowsDeleted => {
       if (rowsDeleted === 0) {
-        response.status(404).json({ "error": "No matching ID found, please enter a valid id."})
+        response.status(404).json({ error: "No matching ID found, please enter a valid id."})
       } else {
         response.sendStatus(204)
       }
@@ -112,3 +96,5 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
       response.status(500).json({ error })
     })
 })
+
+module.exports = app
