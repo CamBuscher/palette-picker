@@ -110,5 +110,18 @@ describe('API Routes', () => {
         done()
       })
     })
+
+    it('should return a warning string if no name given', done => {
+      chai.request(server)
+      .post('/api/v1/projects')
+      .send({})
+      .end((error, response) => {
+        response.should.have.status(422)
+        response.should.be.json;
+        response.body.should.be.a('object')
+        response.body.error.should.equal(`Expected format: { name: <String> }. You're missing a "name" property.`)
+        done()
+      })
+    })
   })
 })
