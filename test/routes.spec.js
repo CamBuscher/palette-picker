@@ -168,25 +168,25 @@ describe('API Routes', () => {
     })
   })
 
-  describe('DELETE /api/v1/palettes/:id', done => {
-    it('should return a 204 status if successfully deleted', done => {
+  describe('DELETE /api/v1/palettes/:id', () => {
+    it('should delete a palette and return a 200 status', done => {
       chai.request(server)
-        .delete('api/v1/palettes/1')
+        .delete('/api/v1/palettes/1')
         .end((error, response) => {
-          response.should.have.status(204);
-          response.should.be.json
-          response.body.should.be('Success')
-          done();
-      })
+          response.should.have.status(204)
+          done()
+        })
     })
-  })
 
-  it('should return an error message if sent a non-existant id', done => {
-    chai.request(server)
-      .delete('api/v1/palettes/1245')
-      .end((error, response) => {
-        response.should.have.status(404)
-        done()
-      })
+  })
+  describe('DELETE /api/v1/palettes/:id', () => {
+      it('should delete a palette and return a 200 status', done => {
+      chai.request(server)
+        .delete('/api/v1/palettes/1')
+        .end((error, response) => {
+          response.should.have.status(204)
+          done()
+        })
+    })
   })
 })

@@ -87,9 +87,9 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
   database('palettes').where('id', id).del()
     .then(rowsDeleted => {
       if (rowsDeleted === 0) {
-        response.status(404).json({ "error": "No matching ID found, please enter a valid id."})
+        response.status(404).json({ error: "No matching ID found, please enter a valid id."})
       } else {
-        response.status(204).json('Success')
+        response.sendStatus(204)
       }
     })
     .catch(error => {
