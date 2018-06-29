@@ -146,5 +146,25 @@ describe('API Routes', () => {
         done();
       })
     })
+
+    it('should return an error object if missing a part of the request', done => {
+      chai.request(server)
+        .post('/api/v1/palettes')
+        .send({
+          name: 'Paletteeee',
+          color2: '#000000',
+          color3: '#000000',
+          color4: '#000000',
+          color5: '#000000',
+          project_id: 1
+        })
+        .end((error, response) => {
+          response.should.have.status(422);
+          response.should.be.json;
+          response.body.should.be.a('object');
+          response.body.error.should.equal(`Expected format: { name: <String>, color1: <String>, color2: <String>, color3: <String>, color4: <String>, color5: <String>, project_id: <Integer> }. You're missing a "color1" property.`)
+          done();
+      })
+    })
   })
 })
