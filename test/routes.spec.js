@@ -124,4 +124,27 @@ describe('API Routes', () => {
       })
     })
   })
+
+  describe('POST /api/v1/palettes', () => {
+    it('should return an object containing the id the new palette', done => {
+      chai.request(server)
+      .post('/api/v1/palettes')
+      .send({
+        name: 'Paletteeee',
+        color1: '#000000',
+        color2: '#000000',
+        color3: '#000000',
+        color4: '#000000',
+        color5: '#000000',
+        project_id: 1
+      })
+      .end((error, response) => {
+        response.should.have.status(201);
+        response.should.be.json;
+        response.body.should.be.a('object');
+        response.body.id.should.equal(3)
+        done();
+      })
+    })
+  })
 })
