@@ -63,4 +63,34 @@ describe('API Routes', () => {
       })
     })
   })
+
+  describe('GET /api/v1/palettes', () => {
+    it('should return an array of palettes', done => {
+      chai.request(server)
+        .get('/api/v1/palettes')
+        .end((error, response) => {
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body.should.be.a('array');
+          response.body.length.should.equal(2);
+          response.body[0].should.have.property('id');
+          response.body[0].id.should.equal(1);
+          response.body[0].should.have.property('name');
+          response.body[0].name.should.equal('Lorem');
+          response.body[0].should.have.property('color1');
+          response.body[0].color1.should.equal('#2A0AAD');
+          response.body[0].should.have.property('color2');
+          response.body[0].color2.should.equal('#BB229D');
+          response.body[0].should.have.property('color3');
+          response.body[0].color3.should.equal('#A769A7');
+          response.body[0].should.have.property('color4');
+          response.body[0].color4.should.equal('#FD5783');
+          response.body[0].should.have.property('color5');
+          response.body[0].color5.should.equal('#D04318');
+          response.body[0].should.have.property('created_at')
+          response.body[0].should.have.property('updated_at')
+          done();
+        })
+    })
+  })
 })
