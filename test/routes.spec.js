@@ -1,10 +1,10 @@
-const environment = process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = 'test';
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
 const server = require('../server');
-const configuration = require('../knexfile')[environment];
+const configuration = require('../knexfile')['test'];
 const knex = require('knex')(configuration);
 
 chai.use(chaiHttp);
@@ -91,6 +91,24 @@ describe('API Routes', () => {
           response.body[0].should.have.property('updated_at')
           done();
         })
+    })
+  })
+
+  describe('POST /api/v1/projects', () => {
+    it('should return an object containing the id of the new project', done => {
+      chai.request(server)
+      .post('/api/v1/projects')
+      .send({
+        name: 'Test project please ignore'
+      })
+      .end((error, response) => {
+        response.should.have.status(201);
+        response.should.be.json;
+        response.body.should.be.a('object');
+        response.body.should.have.property('id');
+        response.body.id.should.equal(2);
+        done()
+      })
     })
   })
 })
