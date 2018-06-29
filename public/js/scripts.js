@@ -79,7 +79,7 @@ $(document).ready(() => {
   // PROJECTS
 
   function postProject(project) {
-    return fetch('http://localhost:3000/api/v1/projects', {
+    return fetch('/api/v1/projects', {
       body: JSON.stringify(project),
       headers: {
         'content-type': 'application/json'
@@ -114,7 +114,7 @@ $(document).ready(() => {
   }
 
   function fetchExistingProjects() {
-    fetch('http://localhost:3000/api/v1/projects', {
+    fetch('/api/v1/projects', {
       headers: {
         'content-type': 'application/json'
       },
@@ -127,7 +127,7 @@ $(document).ready(() => {
   //PALETTES
 
   function postPalette(palette) {
-    return fetch('http://localhost:3000/api/v1/palettes', {
+    return fetch('/api/v1/palettes', {
       body: JSON.stringify(palette),
       headers: {
         'content-type': 'application/json'
@@ -177,7 +177,7 @@ $(document).ready(() => {
   }
 
   function fetchExistingPalettes() {
-    fetch('http://localhost:3000/api/v1/palettes', {
+    fetch('/api/v1/palettes', {
       headers: {
         'content-type': 'application/json'
       },
@@ -195,7 +195,7 @@ $(document).ready(() => {
     
     $(this).closest('div').remove()
 
-    fetch(`http://localhost:3000/api/v1/palettes/${id}`, {
+    fetch(`/api/v1/palettes/${id}`, {
       headers: {
         'content-type': 'application/json'
       },
