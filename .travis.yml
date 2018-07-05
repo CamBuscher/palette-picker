@@ -1,8 +1,14 @@
 language: node_js
-node_js: "8"
-services: 
-  - postgresql
+node_js: '8'
+services:
+- postgresql
 before_script:
-  - psql -c 'CREATE DATABASE palettepicker;'
+- psql -c 'CREATE DATABASE palettepicker;'
 notifications:
   email: false
+deploy:
+  provider: heroku
+  api_key:
+    secure: HdZVfXBhmVUTGbqBNHFIEbwumx2Q9gQGPyL9uU+Iir0ZpNDLbYsW3VWFe6mKgnNwrVq62LRt0m4CIL1vIpvcc/nLFKjOILoKN9TqfbfRw2stnFCPc/HWk6cifbD1pokauyL+JeRfigWVXEc9gbdp8c2XtIbIHx7WZv9iSbKNKlw1BZJjwnfPNV6uAYO5zeNNftXo8EFoSR52vLIALkFO/V7fXomqtoX7YEtEgLPGon1ZfTiEly4pjJtvtXKJ4uU0z4HQLfLVgZSUyIYsBM26YkK0NBqy/JCUaI5TginfKmwjDP84prLmslIB5ie/HiM53gclX/T2aUqGTYOM4Xvo314ARr2K2VOc6eBdjPqDUqeuszBopJVK9rF2ow4PN3Gn+An4dgEVEwqMinvLDr/kmD9fX+KkXo2Z6t20Jk4slLqr8nWZIQB1/fUgYCdfYIxeuMmhJ9KvRxnrUZRqqxnNvNUtneTSNh54+mmObTUPd Ic3JEb5O+f+lmsQnzXAsN1QBTMBU4sa79op4uBe42Y3PeMguJd9xN/AFEIs62FwyM/2MsjkJ9W+6NUJoinQxdCbyXzGX7XbLPdknK1gxnCJzNOcl2YY57Wvg9KuQUCgMUBB0Cyj/SDSXMKqIaTaZIirF0qgdq+dKhS1cpv58Vnzd7V5av2t5nUNNHIAyhF4TtQ=
+  app: butt-picker
+  skip_cleanup: true
