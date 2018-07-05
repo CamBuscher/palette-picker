@@ -4,3 +4,5 @@ services:
   - postgresql
 before_script:
   - psql -c 'CREATE DATABASE palettepicker;'
+notifications:
+  email: false
