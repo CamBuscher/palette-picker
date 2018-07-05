@@ -79,7 +79,7 @@ app.post('/api/v1/palettes', (request, response) => { //Exact same as projects i
     .catch(error => {
       response.status(500).json({ error })
     })
-})
+}) //SICK NEW COMMENT
 
 app.delete('/api/v1/palettes/:id', (request, response) => { //a dynamic url which takes in an id of a palette to delete it from the table
   const id = request.params.id 
